@@ -24,6 +24,18 @@ export type ValuePeriod = "Mensual" | "Anual";
 /** Resultado de un negocio en la etapa de cierre. */
 export type CloseStatus = "Ganado" | "Perdido";
 
+export type ActivityType = "Llamada" | "Reunión" | "Correo enviado" | "Propuesta enviada" | "Nota rápida";
+
+/** Entrada de la bitácora de seguimiento de un negocio. */
+export interface DealActivity {
+  id: string;
+  type: ActivityType;
+  note: string;
+  author: string;
+  /** Fecha y hora ISO 8601. */
+  createdAt: string;
+}
+
 export interface Deal {
   id: string;
   title: string;
@@ -40,6 +52,8 @@ export interface Deal {
   diagnosticNotes?: string;
   /** Solo aplica cuando stageId es la etapa de cierre. */
   closeStatus?: CloseStatus;
+  /** Bitácora de seguimiento, de la más reciente a la más antigua. */
+  activities: DealActivity[];
 }
 
 export interface PipelineStage {

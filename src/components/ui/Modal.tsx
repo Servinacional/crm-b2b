@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 interface ModalProps {
   title: string;
   description?: string;
+  size?: "md" | "xl";
   onClose: () => void;
   children: ReactNode;
 }
@@ -15,7 +16,9 @@ interface ModalProps {
  * sin dependencias. Se abre al montarse; quien lo usa lo desmonta para cerrarlo.
  * El primer elemento con `data-autofocus` recibe el foco inicial.
  */
-export function Modal({ title, description, onClose, children }: ModalProps) {
+const SIZES = { md: "max-w-xl", xl: "max-w-5xl" } as const;
+
+export function Modal({ title, description, size = "md", onClose, children }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -41,7 +44,7 @@ export function Modal({ title, description, onClose, children }: ModalProps) {
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
-      className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-2xl bg-white p-0 text-slate-900 shadow-2xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/40 backdrop:backdrop-blur-[2px]"
+      className={`m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] ${SIZES[size]} overflow-hidden rounded-2xl bg-white p-0 text-slate-900 shadow-2xl ring-1 ring-slate-900/5 backdrop:bg-slate-900/40 backdrop:backdrop-blur-[2px]`}
     >
       <div className="flex max-h-[calc(100dvh-2rem)] flex-col">
         <header className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-4">

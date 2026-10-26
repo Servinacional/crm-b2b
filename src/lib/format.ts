@@ -42,3 +42,38 @@ export function formatShortDate(isoDate: string): string {
     .toLocaleDateString("es-CO", { day: "numeric", month: "short", year: "numeric" })
     .replace(".", "");
 }
+
+const relativeFormatter = new Intl.RelativeTimeFormat("es", { numeric: "auto" });
+
+/**
+ * Tiempo relativo para la bitácora: "Hace 5 minutos", "Hace 3 horas", "Ayer";
+ * desde 2 días atrás muestra fecha y hora: "24 oct, 03:30 p. m.".
+ */
+export function formatActivityTime(iso: string, now: number): string {
+  const date = new Date(iso);
+  const minutes = Math.round((now - date.getTime()) / 60_000);
+
+  if (minutes < 1) return "Justo ahora";
+  if (minutes < 60) return capitalize(relativeFormatter.format(-minutes, "minute"));
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return capitalize(relativeFormatter.format(-hours, "hour"));
+  if (hours < 48) return capitalize(relativeFormatter.format(-1, "day"));
+  return formatDateTime(iso);
+}
+
+/** Ej: "26 oct 2026, 09:48 a. m." */
+export function formatDateTime(iso: string, withYear = false): string {
+  return new Date(iso)
+    .toLocaleString("es-CO", {
+      day: "numeric",
+      month: "short",
+      ...(withYear && { year: "numeric" }),
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    .replace(".", "");
+}
+
+function capitalize(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}

@@ -15,7 +15,7 @@ interface PipelineViewProps {
 type EditorState = { mode: "closed" } | { mode: "create" } | { mode: "edit"; deal: Deal };
 
 export function PipelineView({ initialDeals }: PipelineViewProps) {
-  const { deals, moveDeal, changeCloseStatus, saveDeal, deleteDeal } = useDeals(initialDeals);
+  const { deals, moveDeal, changeCloseStatus, saveDeal, addActivity, deleteDeal } = useDeals(initialDeals);
   const [editor, setEditor] = useState<EditorState>({ mode: "closed" });
 
   return (
@@ -51,6 +51,7 @@ export function PipelineView({ initialDeals }: PipelineViewProps) {
           deal={editor.mode === "edit" ? editor.deal : undefined}
           onSave={saveDeal}
           onDelete={deleteDeal}
+          onAddActivity={addActivity}
           onClose={() => setEditor({ mode: "closed" })}
         />
       )}

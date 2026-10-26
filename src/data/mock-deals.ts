@@ -11,6 +11,15 @@ export const MOCK_DEALS: Deal[] = [
     estimatedValue: 8_500_000,
     valuePeriod: "Mensual",
     targetCloseDate: "2027-02-15",
+    activities: [
+      {
+        id: "act-001-1",
+        type: "Llamada",
+        note: "Primer contacto. Interesados en centralizar inventario de 4 bodegas. Agendar presentación.",
+        author: "Comercial",
+        createdAt: "2026-10-22T10:15:00-05:00",
+      },
+    ],
   },
   {
     id: "deal-002",
@@ -22,6 +31,7 @@ export const MOCK_DEALS: Deal[] = [
     estimatedValue: 4_200_000,
     valuePeriod: "Mensual",
     targetCloseDate: "2027-01-30",
+    activities: [],
   },
   {
     id: "deal-003",
@@ -34,6 +44,22 @@ export const MOCK_DEALS: Deal[] = [
     valuePeriod: "Mensual",
     targetCloseDate: "2026-12-18",
     diagnosticNotes: "Tickets gestionados por correo; sin SLA medible. 3 sedes.",
+    activities: [
+      {
+        id: "act-003-2",
+        type: "Reunión",
+        note: "Levantamiento As-Is con coordinación de sistemas: ~1.200 tickets/mes sin SLA. Piden caso de éxito del sector salud.",
+        author: "Comercial",
+        createdAt: "2026-10-23T09:00:00-05:00",
+      },
+      {
+        id: "act-003-1",
+        type: "Correo enviado",
+        note: "Envío de agenda y cuestionario de diagnóstico previo a la reunión.",
+        author: "Comercial",
+        createdAt: "2026-10-20T16:40:00-05:00",
+      },
+    ],
   },
   {
     id: "deal-004",
@@ -46,6 +72,15 @@ export const MOCK_DEALS: Deal[] = [
     valuePeriod: "Anual",
     targetCloseDate: "2027-01-20",
     diagnosticNotes: "Reportes manuales en Excel; cierre mensual tarda 6 días.",
+    activities: [
+      {
+        id: "act-004-1",
+        type: "Reunión",
+        note: "Workshop To-Be con gerencia comercial. Validan tablero de ventas por zona; falta definir fuente de datos de cartera.",
+        author: "Comercial",
+        createdAt: "2026-10-24T14:30:00-05:00",
+      },
+    ],
   },
   {
     id: "deal-005",
@@ -57,6 +92,29 @@ export const MOCK_DEALS: Deal[] = [
     estimatedValue: 180_000_000,
     valuePeriod: "Anual",
     targetCloseDate: "2026-12-05",
+    activities: [
+      {
+        id: "act-005-3",
+        type: "Llamada",
+        note: "CFO confirma revisión en comité del 4 de nov. Preguntan por descuento por pago anual anticipado.",
+        author: "Comercial",
+        createdAt: "2026-10-26T08:20:00-05:00",
+      },
+      {
+        id: "act-005-2",
+        type: "Propuesta enviada",
+        note: "Propuesta v2 con fases de migración y soporte 24/7.",
+        author: "Comercial",
+        createdAt: "2026-10-21T11:05:00-05:00",
+      },
+      {
+        id: "act-005-1",
+        type: "Nota rápida",
+        note: "Decisor final: Mariana Ospina (CFO). Influenciador: líder de infraestructura.",
+        author: "Comercial",
+        createdAt: "2026-10-14T17:45:00-05:00",
+      },
+    ],
   },
   {
     id: "deal-006",
@@ -68,6 +126,15 @@ export const MOCK_DEALS: Deal[] = [
     estimatedValue: 12_000_000,
     valuePeriod: "Mensual",
     targetCloseDate: "2026-11-28",
+    activities: [
+      {
+        id: "act-006-1",
+        type: "Llamada",
+        note: "Negociando alcance de la integración con WhatsApp Business. Siguiente paso: enviar minuta de contrato.",
+        author: "Comercial",
+        createdAt: "2026-10-25T11:10:00-05:00",
+      },
+    ],
   },
   {
     id: "deal-007",
@@ -80,5 +147,14 @@ export const MOCK_DEALS: Deal[] = [
     valuePeriod: "Mensual",
     targetCloseDate: "2026-11-10",
     closeStatus: "Ganado",
+    activities: [
+      {
+        id: "act-007-1",
+        type: "Nota rápida",
+        note: "Contrato firmado. Kickoff de implementación el 3 de nov.",
+        author: "Comercial",
+        createdAt: "2026-10-19T15:00:00-05:00",
+      },
+    ],
   },
 ];
