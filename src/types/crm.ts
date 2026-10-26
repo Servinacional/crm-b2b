@@ -24,6 +24,12 @@ export type ValuePeriod = "Mensual" | "Anual";
 /** Resultado de un negocio en la etapa de cierre. */
 export type CloseStatus = "Ganado" | "Perdido";
 
+/** Empresas del grupo que pueden ser dueñas de una oportunidad. */
+export type GroupCompany = "Osya" | "Aseoservicios" | "Servinacional";
+
+/** Módulos BPO comercializados por Servinacional. */
+export type BpoModule = "BPO Selección" | "BPO Contratación" | "BPO Nómina";
+
 export type ActivityType = "Llamada" | "Reunión" | "Correo enviado" | "Propuesta enviada" | "Nota rápida";
 
 /** Entrada de la bitácora de seguimiento de un negocio. */
@@ -41,6 +47,11 @@ export interface Deal {
   title: string;
   companyName: string;
   contactName: string;
+  /** Comercial responsable de la oportunidad. */
+  owner: string;
+  groupCompany: GroupCompany;
+  /** Solo aplica a Servinacional: al menos un módulo. Vacío para las demás empresas. */
+  bpoModules: BpoModule[];
   stageId: StageId;
   /** Porcentaje de 0 a 100. */
   probability: number;

@@ -37,7 +37,7 @@ export function KanbanBoard({ deals, onMoveDeal, onCloseStatusChange, onOpenDeal
 
   const columns = (
     <div className="overflow-x-auto pb-4">
-      <div className="mx-auto flex min-h-[calc(100vh-11rem)] w-max gap-3">
+      <div className="mx-auto flex min-h-[calc(100vh-14rem)] w-max gap-3">
         {PIPELINE_STAGES.map((stage) => (
           <KanbanColumn
             key={stage.id}

@@ -4,8 +4,12 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import type { Deal } from "@/types/crm";
 import { useDeals } from "@/hooks/useDeals";
+import { SALES_REPS } from "@/lib/organization";
+import { ownersOf } from "@/lib/metrics";
 import { KanbanBoard } from "@/components/kanban";
 import { DealFormModal } from "@/components/deals/DealFormModal";
+import { ManagementReport } from "@/components/report/ManagementReport";
+import { ViewTabs, tabId, tabPanelId, type PipelineTab } from "./ViewTabs";
 
 interface PipelineViewProps {
   initialDeals: Deal[];
@@ -17,11 +21,14 @@ type EditorState = { mode: "closed" } | { mode: "create" } | { mode: "edit"; dea
 export function PipelineView({ initialDeals }: PipelineViewProps) {
   const { deals, moveDeal, changeCloseStatus, saveDeal, addActivity, deleteDeal } = useDeals(initialDeals);
   const [editor, setEditor] = useState<EditorState>({ mode: "closed" });
+  const [tab, setTab] = useState<PipelineTab>("kanban");
+  const openDeal = (deal: Deal) => setEditor({ mode: "edit", deal });
+  const ownerSuggestions = [...new Set([...SALES_REPS, ...ownersOf(deals)])];
 
   return (
     <>
       {/* max-w = ancho del tablero (6 columnas de 18rem + 5 separaciones de 0.75rem) para alinear el header. */}
-      <header className="mx-auto mb-6 flex max-w-[111.75rem] items-end justify-between gap-4">
+      <header className="mx-auto mb-5 flex max-w-[111.75rem] items-end justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold text-slate-900">Pipeline de Ventas</h1>
           <p className="text-sm text-slate-500">
@@ -38,12 +45,22 @@ export function PipelineView({ initialDeals }: PipelineViewProps) {
         </button>
       </header>
 
-      <KanbanBoard
-        deals={deals}
-        onMoveDeal={moveDeal}
-        onCloseStatusChange={changeCloseStatus}
-        onOpenDeal={(deal) => setEditor({ mode: "edit", deal })}
-      />
+      <div className="mx-auto mb-5 max-w-[111.75rem]">
+        <ViewTabs active={tab} onChange={setTab} />
+      </div>
+
+      <div role="tabpanel" id={tabPanelId(tab)} aria-labelledby={tabId(tab)}>
+        {tab === "kanban" ? (
+          <KanbanBoard
+            deals={deals}
+            onMoveDeal={moveDeal}
+            onCloseStatusChange={changeCloseStatus}
+            onOpenDeal={openDeal}
+          />
+        ) : (
+          <ManagementReport deals={deals} onOpenDeal={openDeal} />
+        )}
+      </div>
 
       {editor.mode !== "closed" && (
         <DealFormModal
@@ -52,6 +69,7 @@ export function PipelineView({ initialDeals }: PipelineViewProps) {
           onSave={saveDeal}
           onDelete={deleteDeal}
           onAddActivity={addActivity}
+          ownerSuggestions={ownerSuggestions}
           onClose={() => setEditor({ mode: "closed" })}
         />
       )}

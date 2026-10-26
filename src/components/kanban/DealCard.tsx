@@ -2,6 +2,9 @@ import { Building2, CalendarDays } from "lucide-react";
 import type { CloseStatus, Deal } from "@/types/crm";
 import { formatDealValue, formatShortDate } from "@/lib/format";
 import { CLOSING_STAGE_ID } from "@/lib/pipeline";
+import { shortModuleName } from "@/lib/organization";
+import { CompanyTag } from "@/components/ui/CompanyTag";
+import { OwnerAvatar } from "@/components/ui/OwnerAvatar";
 import { CloseStatusSelector } from "./CloseStatusSelector";
 import { ProbabilityBadge } from "./ProbabilityBadge";
 
@@ -57,9 +60,23 @@ export function DealCard({ deal, isDragging = false, onOpen, onCloseStatusChange
         {formatDealValue(deal.estimatedValue, deal.valuePeriod)}
       </p>
 
+      <div className="mt-2">
+        <CompanyTag company={deal.groupCompany} />
+        {deal.bpoModules.length > 0 && (
+          <p className="mt-0.5 pl-3.5 text-[11px] text-slate-500">
+            BPO: {deal.bpoModules.map(shortModuleName).join(" · ")}
+          </p>
+        )}
+      </div>
+
       <div className="mt-2 flex items-center gap-1.5 border-t border-slate-100 pt-2 text-xs text-slate-500">
         <CalendarDays className="size-3.5" aria-hidden />
         <time dateTime={deal.targetCloseDate}>{formatShortDate(deal.targetCloseDate)}</time>
+        {deal.owner && (
+          <span className="ml-auto">
+            <OwnerAvatar name={deal.owner} />
+          </span>
+        )}
       </div>
 
       {isClosing && onCloseStatusChange && (
